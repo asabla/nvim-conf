@@ -95,15 +95,38 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch for [M] marks' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
+
+        -- TODO: remove this, previous solution
+        -- builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        --   winblend = 10,
+        --   previewer = false,
+        -- })
+
+        -- More about customization can be found at
+        -- https://github.com/nvim-telescope/telescope.nvim/issues/195#issuecomment-717183166
+        -- https://github.com/nvim-telescope/telescope.nvim/blob/cb3f98d935842836cc115e8c9e4b38c1380fbb6b/lua/telescope/themes.lua#L27
+        builtin.current_buffer_fuzzy_find {
+          shorten_path = false,
+          height = 10,
+          layout_strategy = 'center',
+          sorting_strategy = 'ascending',
           previewer = false,
-        })
+          layout_config = {
+            width = function(_, max_columns, _)
+              return math.min(max_columns, 120)
+            end,
+
+            height = function(_, _, max_lines)
+              return math.min(max_lines, 45)
+            end,
+          },
+        }
       end, { desc = '[/] Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.

@@ -67,6 +67,23 @@ require('lazy').setup({
     },
   },
 
+  {
+    'alexghergh/nvim-tmux-navigation',
+    config = function()
+      require('nvim-tmux-navigation').setup {
+        disable_when_zoomed = false, -- defaults to false
+        keybindings = {
+          left = '<M-j>',
+          down = '<M-k>',
+          up = '<M-l>',
+          right = '<M-ö>',
+          -- last_active = '<M-\\>',
+          -- next = '<M-Space>',
+        },
+      }
+    end,
+  },
+
   -- This is often very useful to both group configuration, as well as handle
   -- lazy loading plugins that don't need to be loaded immediately at startup.
   --
