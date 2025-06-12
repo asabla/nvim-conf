@@ -174,5 +174,20 @@ require('lazy').setup({
   },
 })
 
+-- Import longbow and configure
+-- require('longbow').setup {
+--   suggestion = { enabled = true, auto_trigger = true, accept_key = '<Tab>' },
+--   chat = { enabled = true, model = 'gpt-3.5-turbo', toggle_key = '<Leader>cc' },
+--   agent = { enabled = true, auto_apply = false, max_steps = 5, start_key = '<Leader>ca' },
+--   db_path = vim.fn.stdpath 'data' .. '/longbow.sqlite3',
+--   api = { key = 'YOUR_API_KEY', endpoint = 'https://api.example.com/llm' },
+-- }
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Used for Neovide
+if vim.g.neovide then
+  -- Treat both Option keys as Meta in Neovide
+  vim.g.neovide_input_macos_option_key_is_meta = 'both'
+end

@@ -3,8 +3,10 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
+      -- Mason has moved from williamboman to mason-org
+      { 'mason-org/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      'mason-org/mason-lspconfig.nvim',
+
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -146,11 +148,11 @@ return {
 
           -- The following autocommand is used to enable inlay hints in your
           -- code, if the language server you are using supports them
-          --
           -- This may be unwanted, since they displace some of your code
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              -- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { 0 }, { 0 })
             end, '[T]oggle Inlay [H]ints')
           end
         end,
@@ -184,7 +186,36 @@ return {
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
-        --
+
+        tailwindcss = {
+          -- cmd = { 'tailwindcss-language-server', '--stdio' },
+          filetypes = {
+            'typescriptreact',
+            'typescript.tsx',
+            'javascriptreact',
+            'javascript.jsx',
+            'html',
+            'css',
+            'scss',
+            'less',
+            'templ',
+          },
+          settings = {
+            tailwindCSS = {
+              includeLanguages = {
+                typescriptreact = 'javascript',
+                typescript = 'javascript',
+                javascriptreact = 'javascript',
+                javascript = 'javascript',
+                html = 'html',
+                css = 'css',
+                scss = 'scss',
+                less = 'less',
+                templ = 'html',
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
